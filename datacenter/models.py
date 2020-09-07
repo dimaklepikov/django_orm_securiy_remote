@@ -16,9 +16,29 @@ class Passcard(models.Model):
 
 class Visit(models.Model):
     created_at = models.DateTimeField(auto_now=True)
-    passcard = models.ForeignKey(Passcard)
     entered_at = models.DateTimeField()
     leaved_at = models.DateTimeField(null=True)
+    passcard = models.ForeignKey(Passcard)
+
+    @property
+    def duration(self):
+        if not self.leaved_at:
+            return django.utils.timezone.localtime() - self.entered_at
+        else:
+            return self.leaved_at - self.entered_at
+
+    @property
+    def duration_beautify(self):
+        seconds = self.duration.total_seconds()
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        spent_time_string = f'{hours}ч {minutes}мин'
+        return spent_time_string
+
+    @property
+    def is_long(self, minutes=60):
+        overtime = True if self.duration.total_seconds() // 60 > minutes else False
+        return overtime
 
     def __str__(self):
         return "{user} entered at {entered} {leaved}".format(
@@ -26,36 +46,3 @@ class Visit(models.Model):
             entered=self.entered_at,
             leaved="leaved at " + str(self.leaved_at) if self.leaved_at else "not leaved"
         )
-
-
-def get_duration(visit):
-    if visit.leaved_at is None:
-        spent_time = django.utils.timezone.localtime() - visit.entered_at
-        return spent_time
-    else:
-        return visit.leaved_at - visit.entered_at
-
-
-def format_duration(duration):
-    seconds = duration.total_seconds()
-    hours = int(seconds // 3600)
-    minutes = int((seconds % 3600) // 60)
-    spent_time_string = f'{hours}ч {minutes}мин'
-    return spent_time_string
-
-
-def is_visit_long(visit, minutes=60):
-    duration_seconds = get_duration(visit).seconds
-    duration_minutes = (duration_seconds % 3600) // 60
-    if visit.leaved_at is None and duration_minutes > minutes:
-        return True
-    elif visit.leaved_at is None and duration_minutes < minutes:
-        return False
-    stay_seconds = (visit.leaved_at - visit.entered_at).seconds
-    stay_minutes = (stay_seconds % 3600) // 60
-    if visit.leaved_at is not None and stay_minutes > minutes:
-        return True
-    elif visit.leaved_at is not None and stay_minutes < minutes:
-        return False
-    else:
-        return False

@@ -33,12 +33,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for visit in this_passcard_visits %}
+                    {% for visit in passcard.visit_set.all %}
                     <tr>
                         <td class="table-element">{{ forloop.counter }}</td>
                             <td class="table-element"><strong>{{ visit.entered_at }}</strong></td>
                         <td class="table-element">{{ visit.duration }}</td>
-                        <td class="table-element">{{ visit.is_strange }}</td>
+                        <td class="table-element">{{ visit.is_long }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
