@@ -37,7 +37,7 @@ class Visit(models.Model):
 
     @property
     def is_long(self, minutes=60):
-        overtime = True if self.duration.total_seconds() // 60 > minutes else False
+        overtime = 'Подозрительный' if self.duration.total_seconds() // 60 > minutes else 'Нормальный'
         return overtime
 
     def __str__(self):
