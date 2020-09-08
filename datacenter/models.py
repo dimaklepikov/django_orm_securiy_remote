@@ -23,22 +23,20 @@ class Visit(models.Model):
     @property
     def duration(self):
         if not self.leaved_at:
-            return django.utils.timezone.localtime() - self.entered_at
+            return (django.utils.timezone.localtime() - self.entered_at).total_seconds()
         else:
-            return self.leaved_at - self.entered_at
+            return (self.leaved_at - self.entered_at).total_seconds()
 
     @property
     def duration_beautify(self):
-        seconds = self.duration.total_seconds()
-        hours = int(seconds // 3600)
-        minutes = int((seconds % 3600) // 60)
+        hours = int(self.duration // 3600)
+        minutes = int((self.duration % 3600) // 60)
         spent_time_string = f'{hours}ч {minutes}мин'
         return spent_time_string
 
     @property
     def is_long(self, minutes=60):
-        overtime = True if self.duration.total_seconds() // 60 > minutes else False
-        return overtime
+        return self.duration // 60 > minutes
 
     def __str__(self):
         return "{user} entered at {entered} {leaved}".format(
