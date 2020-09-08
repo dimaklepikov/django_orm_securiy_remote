@@ -21,7 +21,7 @@ $ pip3 install -r requirements.txt
  ```
 ## How to launch:
  ```sh
-$ python3 path/main.py
+$  python manage.py runserver 0.0.0.0:8000
  ```
 ### Launch example:
  ```sh
