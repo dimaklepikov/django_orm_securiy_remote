@@ -29,7 +29,7 @@ NAME='cccccc' #name of engine of your database
 DB_USER='dddddd' #username of engine of your database
 DB_PASSWORD=e1234 #password of engine of your database
 SITE_SECRET_KEY='ggggg' #secret_key of your site
-DEBUG=true #debug mode true/false (for developers/production)
+DEBUG=true #debug mode true/false (for development/production)
 
  ```
 ## How to launch:
