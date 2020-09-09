@@ -4,23 +4,13 @@ from environs import Env
 load_dotenv(dotenv_path='.env', verbose=True)
 env = Env()
 env.read_env()
-# DATABASES = {
-#     'default': {
-#         'ENGINE': env('ENGINE'),
-#         'HOST': env('HOST'),
-#         'PORT': env('PORT'),
-#         'NAME': env('NAME'),
-#         'USER': env('USER'),
-#         'PASSWORD': env('DB_PASSWORD'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': env('ENGINE'),
         'HOST': env('HOST'),
-        'PORT': '5434',
-        'NAME': 'checkpoint',
-        'USER': env('DB_USER'),
+        'PORT': env('PORT'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
         'PASSWORD': env('DB_PASSWORD'),
     }
 }
