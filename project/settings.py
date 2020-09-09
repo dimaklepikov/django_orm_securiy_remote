@@ -4,22 +4,33 @@ from environs import Env
 load_dotenv(dotenv_path='.env', verbose=True)
 env = Env()
 env.read_env()
+# DATABASES = {
+#     'default': {
+#         'ENGINE': env('ENGINE'),
+#         'HOST': env('HOST'),
+#         'PORT': env('PORT'),
+#         'NAME': env('NAME'),
+#         'USER': env('USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': env('HOST'),
         'PORT': '5434',
         'NAME': 'checkpoint',
-        'USER': env('USER'),
+        'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
     }
 }
+
 
 INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = os.getenv('SITE_SECRET_KEY')
 
-DEBUG = env.bool('DEBUG_TRUE')
+DEBUG = env.bool('DEBUG')
 
 ROOT_URLCONF = "project.urls"
 

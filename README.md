@@ -19,6 +19,19 @@ $ source bank_controller/bin/activate
  ```sh
 $ pip3 install -r requirements.txt
  ```
+4) On the project level add .env file with variables names, for example:
+(Here we are using PosgreSQL):
+ ```sh
+ENGINE='aaaaa' #name of engine of your database
+HOST='bbbbb' #host of engine of your database
+PORT=1111 #port of engine of your database
+NAME='cccccc' #name of engine of your database
+DB_USER='dddddd' #username of engine of your database
+DB_PASSWORD=e1234 #password of engine of your database
+SITE_SECRET_KEY='ggggg' #secret_key of your site
+DEBUG=true #debug mode true/false (for developers/production)
+
+ ```
 ## How to launch:
  ```sh
 $  python manage.py runserver 0.0.0.0:8000
